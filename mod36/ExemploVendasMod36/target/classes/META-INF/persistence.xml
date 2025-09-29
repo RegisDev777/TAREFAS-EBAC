@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" 
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
+                        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+
+    <!-- ======================== -->
+    <!-- BANCO POSTGRES PRINCIPAL -->
+    <!-- ======================== -->
+    <persistence-unit name="PostgresqlPrincipal">
+        <!-- Pode remover a linha do provider (autodetecta). 
+             Se quiser manter, use o moderno:
+             <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+        
+        <class>br.com.rpires.domain.jpa.ClienteJpa</class>
+        <class>br.com.rpires.domain.jpa.ProdutoJpa</class>
+        <class>br.com.rpires.domain.jpa.VendaJpa</class>
+        <class>br.com.rpires.domain.jpa.ProdutoQuantidadeJpa</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vendas_online" />
+            <property name="javax.persistence.jdbc.user" value="postgres" />
+            <property name="javax.persistence.jdbc.password" value="admin" />
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+    <!-- ======================== -->
+    <!-- BANCO POSTGRES BACKUP -->
+    <!-- ======================== -->
+    <persistence-unit name="PostgresqlBackup">
+        <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+
+        <class>br.com.rpires.domain.jpa.ClienteJpa</class>
+        <class>br.com.rpires.domain.jpa.ProdutoJpa</class>
+        <class>br.com.rpires.domain.jpa.VendaJpa</class>
+        <class>br.com.rpires.domain.jpa.ProdutoQuantidadeJpa</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:15432/vendas_online_2" />
+            <property name="javax.persistence.jdbc.user" value="postgres" />
+            <property name="javax.persistence.jdbc.password" value="admin" />
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+    <!-- ======================== -->
+    <!-- BANCO MYSQL -->
+    <!-- ======================== -->
+    <persistence-unit name="BancoMysql">
+        <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+
+        <class>br.com.rpires.domain.jpa.ClienteJpa2</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/vendas_onlineMySql?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="46412559" />
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+</persistence>
