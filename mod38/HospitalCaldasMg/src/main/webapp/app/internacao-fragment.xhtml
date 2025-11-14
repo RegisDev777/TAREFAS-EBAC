@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- FORM NOVA INTERNAÇÃO -->
+    <h:form id="formNovaInt">
+        <h2>Nova internação</h2>
+
+        <h:panelGrid columns="2">
+
+            <h:outputLabel for="pacienteId" value="ID do Paciente:" />
+            <h:inputText id="pacienteId"
+                         value="#{internacaoMB.pacienteId}" />
+
+            <h:outputLabel for="dataEntrada" value="Data de entrada:" />
+            <h:inputText id="dataEntrada"
+                         value="#{internacaoMB.dataEntrada}" />
+
+            <h:outputLabel for="motivo" value="Motivo:" />
+            <h:inputText id="motivo"
+                         value="#{internacaoMB.motivo}" />
+
+            <h:outputLabel for="obs" value="Observações:" />
+            <h:inputTextarea id="obs"
+                             value="#{internacaoMB.observacoes}" />
+
+        </h:panelGrid>
+
+        <h:commandButton value="Internar"
+                         action="#{internacaoMB.internar}" />
+    </h:form>
+
+    <hr/>
+
+    <!-- LISTA DE INTERNAÇÕES ATIVAS -->
+    <h:form id="formListaInt">
+        <h2>Internações ativas</h2>
+
+        <h:dataTable value="#{internacaoMB.internacoesAtivas}"
+                     var="i"
+                     border="1">
+
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{i.id}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Paciente</f:facet>
+                #{i.paciente.nome}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Entrada</f:facet>
+                #{i.dataEntrada}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+                #{i.status}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Ações</f:facet>
+                <h:commandLink value="Dar alta"
+                               action="#{internacaoMB.darAlta(i.id)}" />
+            </h:column>
+
+        </h:dataTable>
+    </h:form>
+
+</ui:composition>

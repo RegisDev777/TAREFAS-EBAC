@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Pacientes</title>
+</h:head>
+<h:body>
+<h:form id="form">
+    <p:messages showDetail="true" closable="true"/>
+
+    <p:panel header="Buscar">
+        <p:inputText value="#{pacienteMB.filtro}" placeholder="Nome ou CPF"/>
+        <p:commandButton value="Pesquisar" update="tabela"/>
+        <p:commandButton value="Novo" actionListener="#{pacienteMB.novo}"
+                         update="dlg" oncomplete="PF('dlg').show()"/>
+    </p:panel>
+
+    <p:dataTable id="tabela" var="p" value="#{pacienteMB.pacientes}" paginator="true" rows="10">
+        <p:column headerText="Nome">#{p.nome}</p:column>
+        <p:column headerText="CPF">#{p.cpf}</p:column>
+        <p:column headerText="Ações" style="width:200px">
+            <p:commandButton value="Editar" actionListener="#{pacienteMB.editar(p)}"
+                             update="dlg" oncomplete="PF('dlg').show()"/>
+            <p:commandButton value="Excluir" actionListener="#{pacienteMB.excluir(p.id)}"
+                             update="tabela form"/>
+        </p:column>
+    </p:dataTable>
+
+    <p:dialog header="Paciente" widgetVar="dlg" modal="true" resizable="false">
+        <h:panelGrid id="dlg" columns="2" columnClasses="label,field">
+            <h:outputLabel value="Nome"/>
+            <p:inputText value="#{pacienteMB.atual.nome}" required="true"/>
+
+            <h:outputLabel value="CPF"/>
+            <p:inputMask mask="999.999.999-99" value="#{pacienteMB.atual.cpf}" />
+
+            <h:outputLabel value="Telefone"/>
+            <p:inputText value="#{pacienteMB.atual.telefone}" />
+
+            <h:outputLabel/>
+            <p:commandButton value="Salvar" actionListener="#{pacienteMB.salvar}"
+                             update="tabela" oncomplete="PF('dlg').hide()"/>
+        </h:panelGrid>
+    </p:dialog>
+</h:form>
+</h:body>
+</html>

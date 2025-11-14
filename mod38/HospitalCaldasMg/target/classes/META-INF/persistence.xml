@@ -1,0 +1,31 @@
+<!-- META-INF/persistence.xml -->
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.1">
+  <!-- 
+    Unidade de persistência usada em PRODUÇÃO (JTA), 
+    conectada ao DataSource do WildFly.
+    Dê o nome que preferir, só use o MESMO nome no @PersistenceContext.
+  -->
+  <persistence-unit name="HospitalPU" transaction-type="JTA">
+    <!-- Nome JNDI do seu DataSource no WildFly -->
+    <jta-data-source>java:/jdbc/HospitalDS</jta-data-source>
+
+    <!-- Provider: o WildFly já escolhe Hibernate. Não precisa declarar. -->
+    <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+
+    <properties>
+      <!-- Dialect do Postgres (opcional, o Hibernate detecta; mas ajuda) -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+
+      <!-- Logs de SQL (útil no começo; em prod normalmente desligamos) -->
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+
+      <!-- 
+        ATENÇÃO: Em produção, evite criar/alterar schema automaticamente.
+        Deixe "none". Se precisar só para o primeiro deploy, use "update"
+        e depois volte para "none".
+      -->
+      <!-- <property name="hibernate.hbm2ddl.auto" value="none"/> -->
+    </properties>
+  </persistence-unit>
+</persistence>

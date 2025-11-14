@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HospitalCaldasMg</title>
+    <script>
+      // Descobre o context path automaticamente (ex.: "/hospital")
+      (function() {
+        var parts = window.location.pathname.split("/").filter(Boolean);
+        var ctx = parts.length > 0 ? "/" + parts[0] : "";
+        // Redireciona preservando o context path
+        window.location.replace(ctx + "/app/paciente.xhtml");
+      })();
+    </script>
+    <noscript>
+      <!-- Fallback caso o JS esteja desativado -->
+      <meta http-equiv="refresh" content="0; URL=app/paciente.xhtml">
+    </noscript>
+  </head>
+  <body>Redirecionando…</body>
+</html>

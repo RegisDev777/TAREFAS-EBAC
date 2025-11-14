@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>br.com.hospitalcaldas</groupId>
+  <artifactId>hospital</artifactId>
+  <version>1.0.0</version>
+  <packaging>war</packaging>
+
+  <name>hospital</name>
+  <description>Hospital Management - JSF (Jakarta), PrimeFaces no WildFly 38</description>
+  <url>https://example.local/hospital</url>
+
+  <properties>
+    <!-- Jakarta EE 10 roda em Java 17+. Use release=17 para compatibilidade máxima -->
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Versões principais -->
+    <primefaces.version>13.0.8</primefaces.version>
+    <jakarta.ee.api.version>10.0.0</jakarta.ee.api.version>
+
+    <!-- Nome do WAR gerado -->
+    <final.name>hospital</final.name>
+  </properties>
+
+  <dependencies>
+    <!-- API Jakarta EE 10 SOMENTE PARA COMPILAÇÃO (o servidor fornece em runtime) -->
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>${jakarta.ee.api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- PrimeFaces compatível com JSF 4 / Jakarta -->
+    <dependency>
+      <groupId>org.primefaces</groupId>
+      <artifactId>primefaces</artifactId>
+      <version>${primefaces.version}</version>
+    </dependency>
+
+    <!-- (Opcional) Tema do PrimeFaces. Escolha um e descomente.
+    <dependency>
+      <groupId>org.primefaces.themes</groupId>
+      <artifactId>saga</artifactId>
+      <version>1.0.10</version>
+    </dependency>
+    -->
+
+    <!-- NUNCA inclua no pom as APIs fornecidas pelo WildFly (evita conflito):
+         - jakarta.faces:jakarta.faces-api
+         - jakarta.servlet:jakarta.servlet-api
+         - jakarta.el:jakarta.el-api
+         - Qualquer javax.* legacy
+         O jakarta.jakartaee-api (provided) já cobre a compilação.
+    -->
+  </dependencies>
+
+  <build>
+    <finalName>${final.name}</finalName>
+
+    <plugins>
+      <!-- Compilação em Java 17 (compatível com Jakarta EE 10) -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- Geração do WAR (sem exigir web.xml antigo) -->
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <warName>${final.name}</warName>
+        </configuration>
+      </plugin>
+
+      <!-- Recursos com UTF-8 -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <!-- Profile para ambiente local (se quiser suprimir testes, por exemplo) -->
+    <profile>
+      <id>dev</id>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+      </properties>
+    </profile>
+  </profiles>
+</project>
